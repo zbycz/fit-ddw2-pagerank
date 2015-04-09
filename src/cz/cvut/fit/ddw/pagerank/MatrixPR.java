@@ -9,19 +9,14 @@ public abstract class MatrixPR {
     protected Matrix matrix;
     protected Matrix pageRankVector;
     
-    /**
-     * @param matrix Concrete initialized matrix (H, S or G) for page rank computation.
-     */
-    public MatrixPR(Matrix matrix) {
-        this.matrix = matrix;
+    public MatrixPR() {}
+    
+    public void initializePageRankVector(){
         pageRankVector = new Matrix(1, matrix.getM());
-        
         for (int i = 0; i < pageRankVector.getN(); i++)
-            if (i <= 0)
-                pageRankVector.set(0, i, 1);
-            else    
-                pageRankVector.set(0, i, 0);
+            pageRankVector.set(0, i, 1/(double)pageRankVector.getN());
     }
+    
     
     public Matrix getMatrix() {
         return matrix;
@@ -58,6 +53,6 @@ public abstract class MatrixPR {
      * Computes values of PageRank vector for the next iteration.
      */
     private void countPageRankIteration() {
-        // TODO implement page rank computation using the passed matrix.
+        pageRankVector = pageRankVector.times(matrix);
     }
 }

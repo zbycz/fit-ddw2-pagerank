@@ -10,7 +10,7 @@ public class Matrix {
     /** Number of columns */
     protected final int N;
     /** M-by-N array */
-    protected final double[][] data; 
+    protected double[][] data; 
 
     /** Create M-by-N matrix of 0's */
     public Matrix(int M, int N) {
@@ -30,7 +30,7 @@ public class Matrix {
     }
 
     /** Copy constructor */
-    private Matrix(Matrix A) {
+    public Matrix(Matrix A) {
         this(A.data);
     }
     
@@ -123,7 +123,7 @@ public class Matrix {
     public Matrix times(Matrix B) {
         Matrix A = this;
         if (A.N != B.M)
-            throw new RuntimeException("Illegal matrix dimensions.");
+            throw new RuntimeException("Illegal matrix dimensions ("+A.M+"x"+A.N+")x("+B.M+"x"+B.N+")");
         Matrix C = new Matrix(A.M, B.N);
         for (int i = 0; i < C.M; i++)
             for (int j = 0; j < C.N; j++)
@@ -131,7 +131,22 @@ public class Matrix {
                     C.data[i][j] += (A.data[i][k] * B.data[k][j]);
         return C;
     }
-
+    
+    /** return C = A * s */
+    public void scalarTimes(double s) {
+        for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                data[i][j] = (data[i][j] * s);
+    }
+    
+    
+    /** return C = A + s */
+    public void eachPlus(double s) {
+        for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                data[i][j] = (data[i][j] + s);
+    }
+    
     /** return x = A^-1 b, assuming A is square and has full rank */
     public Matrix solve(Matrix rhs) {
         if (M != N || rhs.M != N || rhs.N != 1)

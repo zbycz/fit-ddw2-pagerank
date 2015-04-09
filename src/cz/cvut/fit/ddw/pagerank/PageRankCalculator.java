@@ -6,7 +6,7 @@ public class PageRankCalculator {
     /**
      * @param args Expects following arguments 0 - input file, 1 - number of iterations to compute PageRank, 2 - dumping factor
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if (args.length != 3) {
             System.out.println("Wrong input parameters - required 3 parameters");
             System.out.println("Usage: java -jar inputFile rounds dumpingFactor");
@@ -28,7 +28,7 @@ public class PageRankCalculator {
         calculateWithMatrixG(s, rounds, dumpingFactor);
     }
     
-    private static MatrixH calculateWithMatrixH(String inputFile, int rounds) {
+    private static MatrixH calculateWithMatrixH(String inputFile, int rounds) throws Exception {
         MatrixH h = new MatrixH(inputFile);
         printMatrix(h.getMatrix());
         h.countPr(rounds);
